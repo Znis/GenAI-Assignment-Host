@@ -7,13 +7,18 @@ from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputP
 from langchain.agents import AgentExecutor
 from langchain.agents import tool
 from langchain_core.output_parsers import StrOutputParser
+import os
 
 
 WEATHER_API_KEY=st.secrets['WEATHER_API_KEY']
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+LANGCHAIN_API_KEY = st.secrets['LANGCHAIN_API_KEY']
 
 
-
+os.environ["LANGCHAIN_TRACING_V2"]="true" # enables the tracing
+os.environ["LANGCHAIN_ENDPOINT"]="https://api.smith.langchain.com"
+os.environ["LANGCHAIN_API_KEY"]=os.getenv(LANGCHAIN_API_KEY)
+os.environ["LANGCHAIN_PROJECT"]="assignment-4" #project name in the LangSmith platform
 
 @tool
 def get_weather_data(city: str) -> str:
